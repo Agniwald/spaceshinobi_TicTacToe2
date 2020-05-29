@@ -1,0 +1,95 @@
+body {
+	background-image: url("chika.gif");
+}
+
+.container {
+}
+
+#by p{
+	position: absolute;
+	bottom: 0;
+	color: white;
+	text-shadow: 3px 3px black;
+	font-family: "Roboto";
+	font-size: 32px;
+	font-weight: 500;
+}
+
+.gameboard {
+  display: grid;
+  width: 600px;
+  padding: 5px;
+  position: absolute;
+  box-shadow: 5px 5px white;
+  background-color: #e8bfff;
+  grid-template-rows: 200px 200px 200px;
+  grid-template-columns: 200px 200px 200px;
+}
+
+#hoverboard p, #hoverboard button {
+	text-transform: uppercase;
+	text-decoration: none;
+	margin: 15px;
+}
+
+#hoverboard p {
+	text-shadow: 3px 3px white;
+	font-family: "Roboto";
+	font-weight: 500;
+	font-size: 50px;
+	position: absolute;
+	margin-bottom: 200px;
+	color: black;
+}
+
+#hoverboard {
+	display: flex;
+  	justify-content: center;
+  	align-items: center;
+	position: absolute;
+	background-color: rgba(220, 96, 215, 0.8);
+	width: 610px;
+    height: 610px;            
+    z-index: 10;
+}
+
+.cell {
+  font-family: "Roboto";
+  font-weight: 500;
+  font-size: 100px;
+  margin: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #c4ffe2;
+}
+
+.butt {
+	box-shadow: 4px 4px white;
+	opacity: 1;
+	margin-bottom: 20px;
+	color: black;
+	text-transform: uppercase;
+	text-decoration: none;
+	font-family: "Roboto";
+	font-weight: 500;
+	background: #ffffff;
+	padding: 20px;
+	border: 4px solid black !important;
+	display: inline-block;
+	transition: all 0.4s ease 0s;
+}
+
+.butt:hover{
+	color: #FFFFFF !important;
+	background: #400B3E;
+	border-color: #400B3E !important;
+	transition: all 0.4s ease 0s;
+}
+
+@media all and (max-width:30em){
+ .butt{
+  display:block;
+  margin:0.4em auto;
+ }
+}
