@@ -202,7 +202,6 @@ class Connor {
 							else if (getv(3) == "X" && getv(7) == "X") { addO(6); }
 							else if (getv(5) == "X" && getv(7) == "X") { addO(8); }
 							else { this.randomCorner(); }
-							}
 						}
 					}
 				}
