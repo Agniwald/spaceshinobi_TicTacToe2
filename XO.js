@@ -197,10 +197,10 @@ class Connor {
 						}
 						if (!trap) {
 							// Trap 2
-							if (getv(1) == "X" && getv(3) == "X") { addO(0); }
-							else if (getv(1) == "X" && getv(5) == "X") { addO(2); }
-							else if (getv(3) == "X" && getv(7) == "X") { addO(6); }
-							else if (getv(5) == "X" && getv(7) == "X") { addO(8); }
+							if ((getv(1) == "X" || getv(2)  == "X") && (getv(3) == "X" || getv(6) == "X")) { addO(0);}
+							else if ((getv(0) == "X" || getv(1) == "X") && (getv(5) == "X" || getv(8) == "X")) { addO(2); }
+							else if ((getv(0) == "X" || getv(3)  == "X") && (getv(7) == "X" || getv(8) == "X")) { addO(6); }
+							else if ((getv(6) == "X" || getv(7)  == "X") && (getv(2) == "X" || getv(5) == "X")) { addO(8); }
 							else { this.randomCorner(); }
 						}
 					}
