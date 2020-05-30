@@ -170,7 +170,7 @@ body, html {
 	margin-left: 5px;
 	}
 }
-@media screen and (orientation:landscape) and (max-width: 1079px){
+@media screen and (orientation:landscape){
 .wrapper {
 	width: calc(50% - 15px);
 	margin-left: 5px;
