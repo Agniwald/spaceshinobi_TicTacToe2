@@ -195,7 +195,15 @@ class Connor {
 								}
 							}
 						}
-						if (!trap) { this.randomCorner(); }
+						if (!trap) {
+							// Trap 2
+							if (getv(1) == "X" && getv(3) == "X") { addO(0); }
+							else if (getv(1) == "X" && getv(5) == "X") { addO(2); }
+							else if (getv(3) == "X" && getv(7) == "X") { addO(6); }
+							else if (getv(5) == "X" && getv(7) == "X") { addO(8); }
+							else { this.randomCorner(); }
+							}
+						}
 					}
 				}
 			}
