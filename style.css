@@ -68,9 +68,9 @@ body, html {
 
 #hoverboard p {
 	font-family:"Anime Ace 2.0 BB";
-	font-size: 2vw;
+	font-size: 1em;
 	position: absolute;
-	margin-bottom: 200px;
+	margin-bottom: 40vh;
 	color: black;
 }
 
@@ -147,7 +147,7 @@ body, html {
 	width: 40%;
 	margin-bottom: 20px;
 	color: black;
-	font-size: 40%;
+	font-size: 0.7em;
 	text-transform: uppercase;
 	text-decoration: none;
 	font-family:"Anime Ace 2.0 BB";
@@ -178,10 +178,3 @@ body, html {
 	margin-left: 5px;
 	}
 }
-/*@media screen and (orientation:landscape){
-.wrapper {
-	width: calc(50% - 15px);
-	margin-left: 5px;
-	}
-}
-*/
