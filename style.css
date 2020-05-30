@@ -1,29 +1,86 @@
+@font-face {font-family:"Anime Ace 2.0 BB";
+src:url("fonts/animeace2_reg.eot?") format("eot"), url("fonts/animeace2_reg.woff") format("woff"), url("fonts/animeace2_reg.ttf") format("truetype"), url("fonts/animeace2_reg.svg#AnimeAce2.0BB") format("svg");
+font-weight:normal;
+font-style:normal;
+}
+
 body {
-	background-image: url("chika.gif");
+	background: url("img/back.png") fixed repeat;
+	background-size: 100vw;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+  margin: 0;
 }
 
 .container {
+  width: 100%;
+  height: 100%;
 }
 
-#by p{
+.leftpane {
+    width: 30%;
+    height: 100%;
+    float: left;
+    background-image: url("img/left.gif");
+    background-size: 30vw;
+    background-repeat: no-repeat;
+  	background-position: bottom;
+    border-collapse: collapse;
+}
+
+.middlepane {
+	margin-top: 5px;
+    width: 40%;
+    height: 100%;
+    float: left;
+    border-collapse: collapse;
+}
+
+.rightpane {
+  width: 30%;
+  height: 100%;
+  position: relative;
+  float: right;
+  background-image: url("img/right.gif");
+  background-size: 30vw;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  border-collapse: collapse;
+}
+
+#by {
 	position: absolute;
 	bottom: 0;
 	color: white;
 	text-shadow: 3px 3px black;
-	font-family: "Roboto";
-	font-size: 32px;
+	font-family:"Anime Ace 2.0 BB";
+	font-size: 2vw;
 	font-weight: 500;
 }
 
 .gameboard {
-  display: grid;
-  width: 600px;
-  padding: 5px;
-  position: absolute;
   box-shadow: 5px 5px white;
   background-color: #e8bfff;
-  grid-template-rows: 200px 200px 200px;
-  grid-template-columns: 200px 200px 200px;
+  padding: 5px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 1fr;
+}
+
+.gameboard::before {
+  content: '';
+  width: 0;
+  padding-bottom: 100%;
+  grid-row: 1 / 1;
+  grid-column: 1 / 1;
+}
+
+.gameboard > *:first-child {
+  grid-row: 1 / 1;
+  grid-column: 1 / 1;
 }
 
 #hoverboard p, #hoverboard button {
@@ -34,9 +91,8 @@ body {
 
 #hoverboard p {
 	text-shadow: 3px 3px white;
-	font-family: "Roboto";
-	font-weight: 500;
-	font-size: 50px;
+	font-family:"Anime Ace 2.0 BB";
+	font-size: 2vw;
 	position: absolute;
 	margin-bottom: 200px;
 	color: black;
@@ -47,10 +103,24 @@ body {
   	justify-content: center;
   	align-items: center;
 	position: absolute;
-	background-color: rgba(220, 96, 215, 0.8);
-	width: 610px;
-    height: 610px;            
+	background-color: rgba(220, 96, 215, 0.4);
+	width: inherit;   
     z-index: 10;
+    animation: scale 0.7s ease-in-out both;
+}
+
+#hoverboard:before {
+	content: "";
+	float: left;
+	padding-top: 100%; 	/* initial ratio of 1:1*/
+}
+@-webkit-keyframes scale {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes scale {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
 }
 
 .cell {
@@ -63,6 +133,37 @@ body {
   justify-content: center;
   background-color: #c4ffe2;
 }
+.cell img{
+	width: 75%;
+	filter: invert(83%) sepia(61%) saturate(1005%) hue-rotate(194deg) brightness(99%) contrast(104%);
+	-webkit-animation: rot 0.6s ease-in-out both;
+	animation: rot 0.6s ease-in-out both;
+}
+
+@-webkit-keyframes rot {
+  0% {
+  	opacity: 0;
+    -webkit-transform: rotate(0) scale(0.5);
+            transform: rotate(0) scale(0.5);
+  }
+  100% {
+  	opacity: 1;
+    -webkit-transform: rotate(180deg) scale(1);
+            transform: rotate(180deg) scale(1);
+  }
+}
+@keyframes rot {
+  0% {
+  	opacity: 0;
+    -webkit-transform: rotate(0) scale(0.5);
+            transform: rotate(0) scale(0.5);
+  }
+  100% {
+  	opacity: 1;
+    -webkit-transform: rotate(180deg) scale(1);
+            transform: rotate(180deg) scale(1);
+  }
+}
 
 .butt {
 	box-shadow: 4px 4px white;
@@ -71,7 +172,7 @@ body {
 	color: black;
 	text-transform: uppercase;
 	text-decoration: none;
-	font-family: "Roboto";
+	font-family:"Anime Ace 2.0 BB";
 	font-weight: 500;
 	background: #ffffff;
 	padding: 20px;
@@ -86,10 +187,33 @@ body {
 	border-color: #400B3E !important;
 	transition: all 0.4s ease 0s;
 }
-
-@media all and (max-width:30em){
- .butt{
-  display:block;
-  margin:0.4em auto;
- }
+@media screen and (orientation:portrait){
+.rightpane {
+	position: absolute;
+	right: 0;
+	background-size: 69vw;
+	width: 69%;
+	}
+.leftpane {
+	display: none;
+	}
+.middlepane {
+	width: calc(100% - 15px);
+	margin-left: 5px;
+	}
 }
+@media screen and (orientation:landscape) and (max-width: 1079px){
+.rightpane {
+	right: 0;
+	background-size: 49vw;
+	width: 49%;
+	}
+.leftpane {
+	display: none;
+	}
+.middlepane {
+	width: calc(50% - 15px);
+	margin-left: 5px;
+	}
+}
+

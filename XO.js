@@ -4,25 +4,71 @@ var moveCount = 1;
 var gameOn = false;
 var botFirst = false;
 
+function reset() {
+	document.getElementById("hoverboard").style.display = "none";
+	for (var i = 0; i < 9; i++) {
+		var cell = document.getElementById(String(i));
+		cell.setAttribute("data-c", " ");
+		cell.innerHTML = "";
+	}
+	moveCount = 1;
+	gameOn = true;
+	botFirst = false;
+}
+
+function showHover(t) {
+	gameOn = false;
+	var hover = document.getElementById("hoverboard");
+	hover.style.display = "flex";
+	var hover_text = document.getElementById("hoverboard_text");
+	hover_text.innerHTML = t + '\n\nChoose again';
+
+}
+
+function getv(id) {
+	return cells[id].attributes["data-c"].nodeValue;
+}
+
+function addX(id) {
+	var img = document.createElement("img");
+	img.src = "img/cross.svg";
+	var cell = document.getElementById(String(id));
+	cell.appendChild(img);
+	cell.setAttribute("data-c", "X");
+}
+
+function addO(id) {
+	var img = document.createElement("img");
+	img.src = "img/circle.svg";
+	var cell = document.getElementById(String(id));
+	cell.appendChild(img);
+	cell.setAttribute("data-c", "O");
+}
+
 function checkDraw() {
 	var count = 0;
 	for (var i = 0; i < 9; i++){
-		if (cells[i].innerHTML == "X" || cells[i].innerHTML == "O"){ count++; }
+		if (getv(i) == "X" || getv(i) == "O"){ count++; }
 	}
-	if (count == 9){ return true;}
+	if (count == 9){
+		showHover("DRAW!");
+		return true;
+	}
 	return false;
 }
 
 function checkWin(symb) {
 	for (var r = 0; r < rows.length; r++) {
 		var row = rows[r];
-		var comparerow = [cells[row[0]].innerHTML, cells[row[1]].innerHTML, cells[row[2]].innerHTML];
+		var comparerow = [getv(row[0]), getv(row[1]), getv(row[2])];
 		var counts = {};
 		for (var i = 0; i < comparerow.length; i++) {
 			var num = comparerow[i];
 		 	counts[num] = counts[num] ? counts[num] + 1 : 1;
 		}
 		if (counts[symb] == 3){
+			var t = '"' + symb + '" won!';
+			showHover(t);
 			return true;		
 		}
 	}
@@ -30,9 +76,9 @@ function checkWin(symb) {
 }
 
 function check() {
-	if (checkWin("X")) { alert("X won!"); gameOn = false; return true; }
-	else if (checkWin("O")) { alert("O won!"); gameOn = false; return true; }
-	else if (checkDraw()) { alert("DRAW!"); gameOn = false; return true; }
+	if (checkWin("X")) { return true; }
+	else if (checkWin("O")) { return true; }
+	else if (checkDraw()) { return true; }
 	return false;
 }
 
@@ -41,8 +87,8 @@ class Connor {
 		var corners = [6, 2, 0, 8].sort(function() { return .5 - Math.random(); } );
 		for (var c = 0; c < 4; c++) {
 			var id = corners[c];
-			if (cells[id].innerHTML == " ") {
-				cells[id].innerHTML = "O";
+			if (getv(id) == " ") {
+				addO(id);
 				return true;
 			}
 		}
@@ -52,14 +98,14 @@ class Connor {
 	opCorner() {
 		for (var r = 0; r < rows.length-2; r++) {
 			var row = rows[r];
-			var comparerow = [cells[row[0]].innerHTML, cells[row[1]].innerHTML, cells[row[2]].innerHTML];
+			var comparerow = [getv(row[0]), getv(row[1]), getv(row[2])];
 			if (JSON.stringify(comparerow)==JSON.stringify(["O", " ", " "])) {
 				var finInd = rows[r][2];
-				cells[finInd].innerHTML = "O";
+				addO(finInd);
 				return true;
 			} else if (JSON.stringify(comparerow)==JSON.stringify([" ", " ", "O"])){
 				var finInd = rows[r][0];
-				cells[finInd].innerHTML = "O";
+				addO(finInd);
 				return true;
 			}
 		}
@@ -69,7 +115,7 @@ class Connor {
 	checkConnorWin_or_Lose(symb) {
 		for (var r = 0; r < rows.length; r++) {
 			var row = rows[r];
-			var comparerow = [cells[row[0]].innerHTML, cells[row[1]].innerHTML, cells[row[2]].innerHTML];
+			var comparerow = [getv(row[0]), getv(row[1]), getv(row[2])];
 			var counts = {};
 			for (var i = 0; i < comparerow.length; i++) {
 				var num = comparerow[i];
@@ -78,8 +124,8 @@ class Connor {
 			if (counts[symb] == 2 && counts[" "] == 1){
 				for (var i = 0; i < 3; i++){
 					var g = row[i];
-					if (cells[g].innerHTML == " ") {
-						cells[g].innerHTML = "O";
+					if (getv(g) == " ") {
+						addO(g);
 						return true;
 					}
 				}
@@ -99,7 +145,7 @@ class Connor {
 				}
 				// If Connor is second => check if center is free and take it
 				else {
-					if (cells[4].innerHTML == " ") { cells[4].innerHTML = "O";}
+					if (getv(4) == " ") { addO(4);}
 					// Otherwise => take random corner
 					else { this.randomCorner(); }
 				}
@@ -110,17 +156,17 @@ class Connor {
 
 				// If Connor is first => check if center isn't free and take oposite corner
 				if (botFirst == true) {
-					if (cells[4].innerHTML == "X") {
+					if (getv(4) == "X") {
 						for (var r = 6; r < rows.length; r++) {
 							var row = rows[r];
-							var comparerow = [cells[row[0]].innerHTML, cells[row[1]].innerHTML, cells[row[2]].innerHTML];
+							var comparerow = [getv(row[0]), getv(row[1]), getv(row[2])];
 							if (JSON.stringify(comparerow)==JSON.stringify(["O", "X", " "])) {
 								var finInd = rows[r][2];
-								cells[finInd].innerHTML = "O";
+								addO(finInd);
 								break;
 							} else if (JSON.stringify(comparerow)==JSON.stringify([" ", "X", "O"])){
 								var finInd = rows[r][0];
-								cells[finInd].innerHTML = "O";
+								addO(finInd);
 								break;
 							}
 						}
@@ -137,19 +183,19 @@ class Connor {
 						var sides = [1, 3, 5, 7];
 						for (var r = 6; r < rows.length; r++) {
 							var row = rows[r];
-							var comparerow = [cells[row[0]].innerHTML, cells[row[1]].innerHTML, cells[row[2]].innerHTML];
+							var comparerow = [getv(row[0]), getv(row[1]), getv(row[2])];
 							if (JSON.stringify(comparerow)==JSON.stringify(["X", "O", "X"])) {
 								trap = true;
 								for (var i = 0; i < 4; i++) {
 									var finInd = sides[i];
-									if (cells[finInd].innerHTML == " ") {
-										cells[finInd].innerHTML = "O";
+									if (getv(finInd) == " ") {
+										addO(finInd);
 										break;
 									}
 								}
 							}
 						}
-						if (!trap) {this.randomCorner();}
+						if (!trap) { this.randomCorner(); }
 					}
 				}
 			}
@@ -161,7 +207,7 @@ class Connor {
 						if(!this.opCorner()) {
 							if (!this.randomCorner()) {
 								for (var i = 0; i < cells.length; i++) {
-									if (cells[i].innerHTML == " ") {cells[i].innerHTML == "O"; }
+									if (getv(i) == " ") { addO(i); }
 								}
 							}
 						}
@@ -180,21 +226,19 @@ let connor = new Connor();
 
 // Choose who first
 document.getElementById("bot").addEventListener("click", function(){
-	document.getElementById("hoverboard").remove();
-	gameOn = true;
+	reset();
 	botFirst = true;
 	connor.ConnorMove();
 });
 document.getElementById("human").addEventListener("click", function(){
-	document.getElementById("hoverboard").remove();
-	gameOn = true;
+	reset();
 });
 
 // Listener for player moves
 for(let i = 0; i < cells.length; i++) {
 	cells[i].addEventListener("click", function () {
-		if (cells[i].innerHTML == " " && gameOn) {
-			cells[i].innerHTML = "X";
+		if (getv(i) == " " && gameOn) {
+			addX(i);
 			connor.ConnorMove();
 		}
   	});
