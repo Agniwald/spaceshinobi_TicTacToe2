@@ -171,15 +171,7 @@ body, html {
 	}
 }
 @media screen and (orientation:landscape) and (max-width: 1079px){
-.rightpane {
-	right: 0;
-	background-size: 49vw;
-	width: 49%;
-	}
-.leftpane {
-	display: none;
-	}
-.middlepane {
+.wrapper {
 	width: calc(50% - 15px);
 	margin-left: 5px;
 	}
